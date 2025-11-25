@@ -1,10 +1,12 @@
 import axios from "axios";
 
+const baseURL =
+    import.meta.env.MODE === "development" ? "http://localhost:3000" : "/";
+
 export const api = axios.create({
-    baseURL: "http://localhost:3000", // depois, se mudar, é só ajustar aqui
+    baseURL,
 });
 
-// chamada específica para a rota de simulações
 export async function buscarSimulacoes({ base, usuario, senha, data }) {
     const response = await api.post("/api/simulacoes", {
         base,
@@ -14,4 +16,3 @@ export async function buscarSimulacoes({ base, usuario, senha, data }) {
     });
     return response.data;
 }
-

@@ -42,8 +42,17 @@ export default function Dashboard() {
       console.log("Resposta backend:", dados);
       setResumo(dados);
     } catch (err) {
-      console.error(err);
-      setErro("Erro ao buscar simulações. Verifique os dados informados.");
+      console.error("Erro na chamada buscarSimulacoes:", err);
+
+      // tenta exibir mensagem vinda do backend, se existir
+      const msgBackend =
+        err?.response?.data?.mensagem ||
+        err?.response?.data?.detalhe ||
+        err.message;
+
+      setErro(
+        `Erro ao buscar simulações: ${msgBackend || "verifique os dados."}`
+      );
     } finally {
       setLoading(false);
     }
